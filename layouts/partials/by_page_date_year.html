@@ -1,0 +1,9 @@
+<!-- Groups content by month according to the "date" field in front matter -->
+{{ range .Pages.GroupByDate "2006" }}
+<h3>{{ .Key }}</h3>
+<ul>
+    {{ range .Pages }}
+      {{ partial "partials/content_li.html" . }}
+    {{ end }}
+</ul>
+{{ end }}

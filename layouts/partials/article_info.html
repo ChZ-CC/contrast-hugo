@@ -1,0 +1,24 @@
+{{ if .Date }}
+<time datetime="{{ .Date.Format " 2006-01-02T15:04:05Z07:00" }}">
+  {{ .Date.Format "2006-01-02"}}
+</time>
+{{ end }}
+
+<!-- 添加 css class 之后，页面刷新失效；inline style 有效。解决：在 network 中勾选 Disable cache 即可。 -->
+<!-- <span style="color: #909194;"> -->
+<span class="header-tag">
+{{ if (.GetTerms "tags") }}
+  &nbsp;标签: 
+  {{ $total := (sub (len $.Params.tags) 1) }}
+  {{ range $index, $tag := (.GetTerms "tags") }}
+    <a href="{{ .Permalink }}">{{ .LinkTitle }}</a>{{ if ne $index $total }},{{ else }}{{ end }}
+  {{ end }}
+{{ end }}
+{{ if $.Params.categories }}
+  &nbsp;分类: 
+  {{ $total := (sub (len $.Params.categories) 1) }}
+  {{ range $index, $category := (.GetTerms "categories") }}
+  <a href="{{ .Permalink }}">{{ .LinkTitle }}</a>{{ if ne $index $total }},{{ else }}{{ end }}
+  {{ end }}
+{{ end }}
+</span>
