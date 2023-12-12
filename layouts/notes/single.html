@@ -10,14 +10,14 @@
     <div class="post-text">
       {{.Content }}
     </div>
-
-    <div>
-      <details class="post-toc" close>
-        <summary>{{ .Title }}</summary>
-        {{ partial "partials/toc.html" . }}
-      </details>
+    {{ if and (not (eq .Params.toc false)) (gt .WordCount .Site.Params.tocMinWordCount ) }}
+      <div>
+        <details class="post-toc" close>
+          <summary>{{ .Title }}</summary>
+          {{ partial "partials/toc.html" . }}
+        </details>
+      {{ end }}
     </div>
-  </div>
 </article>
 
 {{ end }}
