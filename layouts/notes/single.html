@@ -1,0 +1,23 @@
+{{ define "main" }}
+
+<article>
+  {{ partial "partials/breadcrumb.html" . }}
+  <header>
+    <h1>{{ .Title }}</h1>
+    {{ partial "partials/article_info.html" . }}
+  </header>
+  <div class="post-content">
+    <div class="post-text">
+      {{.Content }}
+    </div>
+
+    <div>
+      <details class="post-toc" close>
+        <summary>{{ .Title }}</summary>
+        {{ partial "partials/toc.html" . }}
+      </details>
+    </div>
+  </div>
+</article>
+
+{{ end }}

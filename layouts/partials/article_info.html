@@ -7,18 +7,22 @@
 <!-- 添加 css class 之后，页面刷新失效；inline style 有效。解决：在 network 中勾选 Disable cache 即可。 -->
 <!-- <span style="color: #909194;"> -->
 <span class="header-tag">
-{{ if (.GetTerms "tags") }}
-  &nbsp;标签: 
-  {{ $total := (sub (len $.Params.tags) 1) }}
-  {{ range $index, $tag := (.GetTerms "tags") }}
+  <!-- 字数/作者 -->
+  &nbsp;字数:{{ .WordCount }}&nbsp;用时:{{ .ReadingTime }}min
+  <!-- 分类 -->
+  {{ if $.Params.categories }}
+    &nbsp;分类: 
+    {{ $total := (sub (len $.Params.categories) 1) }}
+    {{ range $index, $category := (.GetTerms "categories") }}
     <a href="{{ .Permalink }}">{{ .LinkTitle }}</a>{{ if ne $index $total }},{{ else }}{{ end }}
+    {{ end }}
   {{ end }}
-{{ end }}
-{{ if $.Params.categories }}
-  &nbsp;分类: 
-  {{ $total := (sub (len $.Params.categories) 1) }}
-  {{ range $index, $category := (.GetTerms "categories") }}
-  <a href="{{ .Permalink }}">{{ .LinkTitle }}</a>{{ if ne $index $total }},{{ else }}{{ end }}
+  <!-- 标签 -->
+  {{ if (.GetTerms "tags") }}
+    &nbsp;标签:
+    {{ $total := (sub (len $.Params.tags) 1) }}
+    {{ range $index, $tag := (.GetTerms "tags") }}
+      <a href="{{ .Permalink }}">{{ .LinkTitle }}</a>{{ if ne $index $total }},{{ else }}{{ end }}
+    {{ end }}
   {{ end }}
-{{ end }}
 </span>
