@@ -16,8 +16,8 @@
 
 <article>
   {{ partial "partials/breadcrumb.html" . }}
-  {{ if .Content }}
-    <!-- 有 index.md 时 -->
+  {{ if or (eq .Title "Home") (eq .Title "首页") }}
+    <!-- 首页 -->
     <header><h1>{{ .Title }}</h1></header>
     {{ .Content }}
     <h2>{{ "最近更新" | default "最近更新" | humanize}}</h2>
@@ -26,10 +26,15 @@
         {{ partial "partials/summary_div.html" . }}
       {{ end }}
     {{ end }}
+  {{ else if or (eq .Name "Tags") (eq .Name "Categories") }}
+    <!-- 分类标签的列表页 -->
+    <header><h1>{{ .Title | default "归档" | humanize }}</h1></header>
+    {{ partial "partials/by_page_taxonomy.html" .}}
   {{ else }}
-    <!-- 无 index.md 时（或 _index.md 为空） -->
+    <!-- 其他 section 目录 -->
     <!-- {{ partial "partials/summary.html" . }} -->
     <header><h1>{{ .Title | default "归档" | humanize }}</h1></header>
+    {{ .Content }}
     <ul class="archive">
       {{ if eq .Page.Section "posts" }}
         {{ partial "partials/by_page_date_year.html" . }}
