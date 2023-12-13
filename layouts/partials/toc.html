@@ -1,11 +1,13 @@
-{{ if not .Params.notoc }}
-<aside>
-  <!-- <header>
-    <a href="#{{ .Title | urlize }}">
-    <h3>{{ .Title }}</h3>
-    </a>
-  </header> -->
-  {{ .TableOfContents }}
-</aside>
-<a href="#" id="toc-toggle"></a>
+{{ if and (not (eq .Params.toc false)) (gt .WordCount .Site.Params.tocMinWordCount ) (.TableOfContents) }}
+
+<div>
+  <details class="post-toc" close>
+    <summary>{{ .Title }}</summary>
+    {{ if not .Params.notoc }}
+      {{ .TableOfContents }}
+      <a href="#" id="toc-toggle"></a>
+    {{ end }}
+  </details>
+</div>
+
 {{ end }}
