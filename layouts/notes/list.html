@@ -1,0 +1,60 @@
+{{ define "main" }}
+
+<article>
+  {{ partial "partials/breadcrumb.html" . }}
+  <div class="post-content">
+    <div class="notes-list">
+      {{ if .Sections }}
+      <!-- 如果是 notes 根目录，展示所有子目录下的文章 -->
+      <h2>更新列表</h2>
+      <ul class="archive">
+        {{ range (where site.RegularPages "Section" "notes").GroupByDate "2006-01" }}
+        <h3>{{ .Key }}</h3>
+        <ul>
+          {{ range .Pages }}
+          <li>
+            {{ if .Date }}<time datetime="{{ .Date.Format " 2006-01-02T15:04:05Z07:00" }}">{{ .Date.Format
+              "2006-01-02"}}</time>{{ end }}
+            <a href="{{ .Permalink }}">{{ .Title }}</a>
+          </li>
+          {{ end }}
+        </ul>
+        {{ end }}
+      </ul>
+      {{ else }}
+      <!-- 如果是子目录，只展示当前目录下的文章 -->
+      <h2>{{ .Title }}笔记</h2>
+      <ul class="archive">
+        {{ range .Pages.GroupByDate "2006-01" }}
+        <h3>{{ .Key }}</h3>
+        <ul>
+          {{ range .Pages }}
+          <li>
+            {{ if .Date }}<time datetime="{{ .Date.Format " 2006-01-02T15:04:05Z07:00" }}">{{ .Date.Format
+              "2006-01-02"}}</time>{{ end }}
+            <a href="{{ .Permalink }}">{{ .Title }}</a>
+          </li>
+          {{ end }}
+        </ul>
+        {{ end }}
+      </ul>
+      {{ end }}
+    </div>
+
+    <div class="tags-list">
+      <ul>
+        {{ range .Sections }}
+        <li>
+          <a href="{{ .Permalink }}">{{ .Title }}<sub>{{ len .Pages }}</sub></a>
+        </li>
+        {{ end }}
+      </ul>
+    </div>
+
+    <div class="post-text">
+      {{ .Content }}
+    </div>
+  </div>
+</article>
+
+{{ end }}

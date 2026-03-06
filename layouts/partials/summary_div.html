@@ -1,5 +1,6 @@
 <!-- this <div> includes the title summary -->
 <div class="summary-div">
+<br>
 <header>
   <h3>
     <a href="{{ .RelPermalink }}">{{ .Title }}</a>
@@ -9,12 +10,12 @@
 {{ if .Description }}
   {{ .Description }}
 {{ else }}
-  {{ .Summary }}
+  {{ .Summary }} ...
 {{ end}}
 {{ if .Truncated }}
 <!-- This <div> includes a read more link, but only if the summary is truncated... -->
-<div class="more">
+<!-- <div class="more">
   <a href="{{ .RelPermalink }}">Read More…</a>
-</div>
+</div> -->
 {{ end }}
 </div>

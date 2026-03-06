@@ -1,0 +1,18 @@
+{{ define "main" }}
+
+<article>
+  {{ partial "partials/breadcrumb.html" . }}
+  <div class="post-content">
+    <div class="notes-list">
+      <h2>更新列表</h2>
+      <ul class="archive">
+        {{ partial "partials/by_page_date_year.html" . }}
+      </ul>
+    </div>
+    <div class="post-text">
+      {{ .Content }}
+    </div>
+  </div>
+</article>
+
+{{ end }}
