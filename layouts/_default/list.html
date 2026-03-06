@@ -21,8 +21,8 @@
     <header><h1>{{ .Title }}</h1></header>
     {{ .Content }}
     <h2>{{ "最近更新" | default "最近更新" | humanize}}</h2>
-    {{ with .Site.GetPage "section" "posts" }}
-      {{ range first 3 .Pages }}
+    {{ with .Site.GetPage "section" "notes" }}
+      {{ range first 10 .Pages }}
         {{ partial "partials/summary_div.html" . }}
       {{ end }}
     {{ end }}
