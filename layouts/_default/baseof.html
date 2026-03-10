@@ -44,7 +44,7 @@
   {{ end }}
 </header>
 
-{{ if and (not .IsHome) (ne .RelPermalink "/archive/") }}
+{{ if not (or .IsHome (eq .RelPermalink "/archive/") (eq .RelPermalink "/about/")) }}
   {{ partial "breadcrumb.html" . }}
 {{ end }}
 
