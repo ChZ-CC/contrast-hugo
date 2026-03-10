@@ -3,34 +3,48 @@
 {{ $Pages := .Pages }}
 
 {{ if .IsHome }}
+  <!-- 收集所有pages -->
   {{ $Pages = where site.RegularPages "Type" "in" .Site.Params.mainSections }}
 {{ end }}
 
-{{ if .Site.Params.excerpts }}
+{{ if eq .Kind "taxonomy" }}
+  <!-- 分类标签的列表 -->
+  <article>
+    <header><h1>{{ .Title | default "归档" | humanize }}</h1></header>
+    {{ partial "by_page_taxonomy.html" .}}
+  </article>
+{{ else if .Site.Params.excerpts }}
+  <!-- 摘要模式 -->
+  {{ $paginator := .Paginate $Pages 10 }}
+  {{ range $paginator.Pages }}
+    {{ partial "summary_div.html" . }}
+  {{ end }}
 
-{{- range $Pages }}
-<article>
-  <header class="meta">
-    <h1><a href="{{ .RelPermalink }}">{{ .Title }}</a></h1>
-    {{ if .Date }}<time datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">{{ .Date.Format "January 02, 2006" }}</time>{{ end }}
-  </header>
-  {{ .Summary }}
-  {{- if .Truncated }}<footer><a class="button" href="{{ .RelPermalink }}">read more</a></footer>{{- end }}
-</article>
-{{- end }}
-
+  {{ if or $paginator.HasPrev $paginator.HasNext }}
+    <div class="pagination">
+      {{ if $paginator.HasPrev }}
+        <a href="{{ $paginator.Prev.URL }}" class="pagination-prev">上一页</a>
+      {{ else }}
+        <span class="pagination-prev hidden">上一页</span>
+      {{ end }}
+      <span class="pagination-info">第 {{ $paginator.PageNumber }} 页，共 {{ $paginator.TotalPages }} 页</span>
+      {{ if $paginator.HasNext }}
+        <a href="{{ $paginator.Next.URL }}" class="pagination-next">下一页</a>
+      {{ else }}
+        <span class="pagination-next hidden">下一页</span>
+      {{ end }}
+    </div>
+  {{ end }}
 {{ else }}
-
-<article>
-  <header><h1>Posts</h1></header>
-  <ul class="meta archive">
-    {{- range $Pages }}
-    <li>{{ if .Date }}<time datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">{{ .Date.Format "2006-01-02" }}</time>{{ end }}  <b><a href="{{ .RelPermalink }}">{{ .Title }}</a></b></li>
-    {{- end }}
-  </ul>
-  {{ .Content }}
-</article>
-
+  <!-- 非摘要模式 -->
+  <article>
+    <ul class="meta archive">
+      {{- range $Pages }}
+      <li>{{ if .Date }}<time datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">{{ .Date.Format "2006-01-02" }}</time>{{ end }}  <b><a href="{{ .RelPermalink }}">{{ .Title }}</a></b></li>
+      {{- end }}
+    </ul>
+    {{ .Content }}
+  </article>
 {{ end }}
 
 {{ end }}

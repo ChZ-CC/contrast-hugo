@@ -1,0 +1,13 @@
+{{ if and (not (eq .Params.toc false)) (gt .WordCount .Site.Params.tocMinWordCount ) (.TableOfContents) }}
+
+<div class="post-toc">
+  <details close>
+    <summary>目录</summary>
+    {{ if not .Params.notoc }}
+      {{ .TableOfContents }}
+      <a href="#" id="toc-toggle"></a>
+    {{ end }}
+  </details>
+</div>
+
+{{ end }}

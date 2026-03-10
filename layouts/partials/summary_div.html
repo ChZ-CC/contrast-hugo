@@ -1,0 +1,13 @@
+<!-- this <div> includes the title summary -->
+<article>
+  <header class="meta">
+    <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+    {{ partial "article_info.html" . }}
+  </header>
+  {{ if .Description }}
+  {{ .Description }}
+  {{ else }}
+  {{ .Summary }} ...
+  {{ end}}
+  {{- if .Truncated }}<footer><a class="button" href="{{ .RelPermalink }}">read more</a></footer>{{- end }}
+</article>
