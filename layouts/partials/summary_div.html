@@ -7,7 +7,7 @@
   {{ if .Description }}
   {{ .Description }}
   {{ else }}
-  {{ .Summary }} ...
+  {{ .Summary }}
   {{ end}}
   {{- if .Truncated }}<footer><a class="button" href="{{ .RelPermalink }}">read more</a></footer>{{- end }}
 </article>
